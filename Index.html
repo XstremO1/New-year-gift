@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For My Shreya ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff4d6d;
+            --paper: #fdfbf7;
+            --line: #aaccff;
+            --cover: #5e4034;
+        }
+
+        /* --- GLOBAL RESET --- */
+        * { 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent;
+            user-select: none; -webkit-user-select: none;
+            touch-action: none;
+        }
+
+        body {
+            margin: 0; padding: 0;
+            background: radial-gradient(circle at 50% 100%, #1a0b2e 0%, #000000 100%);
+            height: 100vh; overflow: hidden;
+            font-family: 'Lato', sans-serif;
+            color: white;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        /* --- BACKGROUND --- */
+        #starCanvas {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
+        }
+
+        /* --- SCREENS --- */
+        .screen {
+            position: absolute; width: 100%; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.8s ease;
+            z-index: 1;
+        }
+        .screen.active { opacity: 1; pointer-events: all; z-index: 10; }
+        .hidden { display: none !important; }
+
+        /* --- SCREEN 1: HOLD --- */
+        .heart-wrapper {
+            position: relative; width: 140px; height: 140px;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer;
+        }
+        .progress-svg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            transform: rotate(-90deg);
+        }
+        .progress-circle {
+            fill: none; stroke: var(--primary); stroke-width: 6; stroke-linecap: round;
+            stroke-dasharray: 377; stroke-dashoffset: 377;
+            transition: stroke-dashoffset 2s linear;
+        }
+        .heart-icon {
+            font-size: 60px; filter: drop-shadow(0 0 20px rgba(255, 77, 109, 0.6));
+            pointer-events: none; animation: pulse-heart 1.5s infinite;
+            transition: transform 0.2s;
+        }
+        .heart-wrapper.is-pressed .heart-icon { transform: scale(0.85); opacity: 0.8; }
+        .heart-wrapper.is-pressed .progress-circle { stroke-dashoffset: 0; }
+        @keyframes pulse-heart { 0%,100%{transform:scale(1);} 50%{transform:scale(1.1);} }
+
+        /* --- SCREEN 2: DISTRACTIONS --- */
+        .distraction-zone { width: 100%; height: 100%; position: relative; }
+        .gift-box {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 80px; z-index: 5; cursor: pointer;
+        }
+        .glass-card {
+            position: absolute; width: 150px; height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 15px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            color: white; font-weight: bold; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 20; transition: transform 0.1s linear;
+        }
+
+        /* --- SCREEN 3: TICKET --- */
+        .golden-ticket {
+            background: linear-gradient(45deg, #d4af37, #f9e7ba, #d4af37);
+            padding: 30px; border-radius: 10px; text-align: center; color: #422a02;
+            width: 85%; max-width: 350px;
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.4);
+            transform: scale(0); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .golden-ticket.show { transform: scale(1); }
+        .claim-btn {
+            background: #1a0b2e; color: #d4af37; border: none; padding: 12px 25px;
+            border-radius: 25px; margin-top: 15px; font-weight: bold;
+        }
+
+        /* --- SCREEN 4: NOTEBOOK --- */
+        .notebook-wrapper {
+            perspective: 2000px;
+            width: 320px; height: 480px;
+            position: relative;
+        }
+        .notebook-cover {
+            position: absolute; width: 100%; height: 100%;
+            background-color: var(--cover);
+            border-radius: 5px 15px 15px 5px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            z-index: 0; top: 5px; left: 5px;
+        }
+        .paper {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--paper);
+            background-image: repeating-linear-gradient(var(--paper) 0px, var(--paper) 24px, var(--line) 25px);
+            border-radius: 2px 10px 10px 2px;
+            transform-origin: left center;
+            transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+            box-shadow: inset 15px 0 20px -10px rgba(0,0,0,0.1), 1px 1px 5px rgba(0,0,0,0.1);
+            display: flex; flex-direction: column; align-items: center;
+            padding: 25px 20px;
+            color: #333; text-align: center;
+            overflow: hidden; backface-visibility: hidden; 
+        }
+        .paper.long-text-page {
+            overflow-y: auto; display: block; touch-action: pan-y;
+        }
+        .photo-polaroid {
+            background: white; padding: 10px 10px 25px 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transform: rotate(-2deg); width: 90%; margin-bottom: 15px;
+            flex-shrink: 0;
+        }
+        .photo-polaroid img { width: 100%; height: 200px; object-fit: cover; min-height: 200px; background: #eee; }
+        
+        .handwritten {
+            font-family: 'Dancing Script', cursive;
+            font-size: 22px; color: #444; margin-top: 10px;
+        }
+        .shayari-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px; color: #222; line-height: 1.6;
+            margin-top: auto; margin-bottom: auto; white-space: pre-wrap;
+        }
+        .msg-text {
+             font-family: 'Playfair Display', serif; /* Elegant font */
+             font-size: 16px; line-height: 1.6; color: #2c2c2c;
+             text-align: left; white-space: pre-wrap; margin-top: 15px;
+        }
+        .click-nav {
+            position: absolute; top: 0; height: 100%; width: 50%; z-index: 999;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="starCanvas"></canvas>
+
+    <div id="s1" class="screen active">
+        <div class="heart-wrapper" id="holdBtn">
+            <svg class="progress-svg" viewBox="0 0 140 140">
+                <circle class="progress-circle" cx="70" cy="70" r="60"></circle>
+            </svg>
+            <div class="heart-icon">❤️</div>
+        </div>
+        <p style="margin-top: 30px; opacity: 0.7; letter-spacing: 2px;">PRESS & HOLD</p>
+    </div>
+
+    <div id="s2" class="screen">
+        <div class="distraction-zone">
+            <div class="gift-box" onclick="goToTicket()">🎁</div>
+            <div class="glass-card" style="top:15%; left:5%; transform:rotate(-5deg);"><div>🌪️</div><p>Stress</p></div>
+            <div class="glass-card" style="top:20%; right:5%; transform:rotate(5deg);"><div>📚</div><p>Exams</p></div>
+            <div class="glass-card" style="bottom:25%; left:10%; transform:rotate(3deg);"><div>⛈️</div><p>Bad Days</p></div>
+            <div class="glass-card" style="bottom:15%; right:10%; transform:rotate(-3deg);"><div>📍</div><p>Distance</p></div>
+        </div>
+    </div>
+
+    <div id="s3" class="screen">
+        <div class="golden-ticket" id="ticket">
+            <h1>Golden Ticket</h1>
+            <p>ADMIT ONE: MY HEART</p>
+            <hr style="opacity:0.3; margin: 15px 0;">
+            <p>"Unlimited Love & Smiles"</p>
+            <button class="claim-btn" onclick="openBook()">OPEN MEMORIES</button>
+        </div>
+    </div>
+
+    <div id="s4" class="screen">
+        <div class="notebook-wrapper">
+            <div class="notebook-cover"></div> 
+            
+            <div class="click-nav" style="left:0" onclick="prevPage()"></div>
+            <div class="click-nav" style="right:0" onclick="nextPage()"></div>
+
+            <div class="paper" id="p0">
+                <div id="coverContent">
+                    <h1 style="font-family:'Playfair Display'; margin-top: 50%; color: #d4af37; font-size: 40px;">Our<br>Journey</h1>
+                    <p class="handwritten">Tap right side to open -></p>
+                </div>
+            </div>
+
+            <div class="paper" id="p1">
+                <div class="photo-polaroid">
+                    <img src="https://i.ibb.co/Wvc4y6jD/Screenshot-20251230-111307-Gallery.jpg" alt="Talav">
+                </div>
+                <p class="handwritten">Shaantata aani tu... ❤️</p>
+            </div>
+
+            <div class="paper" id="p2">
+                <div class="photo-polaroid" style="transform: rotate(2deg);">
+                    <img src="https://i.ibb.co/9H80gRxd/Screenshot-20251230-111342-Gallery.jpg" alt="Movie">
+                </div>
+                <p class="handwritten">Tere Ishq Mein... Movie date 🍿</p>
+            </div>
+
+            <div class="paper" id="p3">
+                <div class="photo-polaroid" style="transform: rotate(-1deg);">
+                    <img src="https://i.ibb.co/wrFLTdpY/Screenshot-20251230-111409-Gallery.jpg" alt="Pooja">
+                </div>
+                <p class="handwritten">Family & You (Ajinkya cha ghari) 🏡</p>
+            </div>
+
+            <div class="paper" id="p4">
+                <div class="photo-polaroid" style="transform: rotate(3deg);">
+                    <img src="https://i.ibb.co/MyQXK8mn/Screenshot-20251230-111421-Gallery.jpg" alt="Mela">
+                </div>
+                <p class="handwritten">Us after shopping at the Mela! 🎡</p>
+            </div>
+
+            <div class="paper" id="p5">
+                <div class="photo-polaroid">
+                    <img src="https://i.ibb.co/8D01BPmT/Screenshot-20251230-111505-Gallery.jpg" alt="My Bday">
+                </div>
+                <p class="handwritten">My Birthday Special 🎉</p>
+            </div>
+
+            <div class="paper" id="p6">
+                <div class="photo-polaroid" style="transform: rotate(-2deg);">
+                    <img src="https://i.ibb.co/1YRFjnZ3/Screenshot-20251230-112536-Gallery.jpg" alt="Ur Bday">
+                </div>
+                <p class="handwritten">Celebrating You 🎂❤️</p>
+            </div>
+            
+            <div class="paper" id="p7">
+                <div class="shayari-text">
+सरत्या वर्षाला निरोप देताना, 
+मला एकच गोष्ट समजली,
+की या जगाच्या गर्दीत, 
+फक्त तुझीच साथ भावली.
+
+वेळ बदलली, परिस्थिती बदलली, 
+पण तू तशीच राहिलीस,
+माझ्या अपूर्ण आयुष्याची, 
+तूच एक पूर्ण कहाणी झालीस.
+                </div>
+            </div>
+
+             <div class="paper" id="p8">
+                <div class="shayari-text">
+वर्ष नवे येईल, तारीख ही बदलून जाईल,
+पण तुझ्यासाठीचे प्रेम, 
+कधीच कमी नाही होईल.
+
+सरत्या वर्षातही तू होतीस, 
+येणाऱ्या वर्षातही तूच हवी,
+मला माझ्या आयुष्याची सुरुवात, 
+फक्त तुझ्यासोबतच हवी.
+
+<strong style="color:var(--primary)">Happy New Year My Love! ❤️</strong>
+                </div>
+            </div>
+            
+            <div class="paper long-text-page" id="p9">
+                <h2 class="handwritten" style="margin: 0; color: var(--primary);">Majha Baccha...</h2>
+                <p class="msg-text">Happy new year majha baccha 🫂🫂🫂💗💗💗💗💗
+
+Ik ha warsha aplya sathi khup wegla hota but bagh na 2024 la start kela ata 2026 ala , bhari wattay ,ha warsha aplya sathi khup kharab gela ik, pn tevdach changla hi hota jasa ki , apla 1 warsha purna jala ya warshat ,didi la samajla tari she was with us , and apan kiti phirlo , bhandlo, nachlo, gaylo, khup enjoy kela ya warshi...</p>
+<p style="font-size: 12px; color: #666; margin-top: 20px;">(Turn page...)</p>
+            </div>
+
+             <div class="paper long-text-page" id="p10">
+                 <p class="msg-text">...teh moments , parat anuh apan lavkarach, ik ata exams and all.ahet, I will focus don't worry, majah ya warsha cha ekacha he ki , me ya warshi tula khayla galel , tujhi kalji geu sakel and nehmi.khush theu sakel ,and i hope so body swatachi jara changli karu sakel 😂, uk tu alis na ya mansala.jagayla shikavla , jo mulga swatacha baini chya lagnat , radu control karu sakto pn tujya lamb janay cha goshti ni kon aso naso tari radto asa mulga tu banavlas ,kharach...</p>
+                 <p style="font-size: 12px; color: #666; margin-top: 20px;">(Turn page...)</p>
+            </div>
+
+            <div class="paper long-text-page" id="p11">
+                 <p class="msg-text">I love you khup majhi chotisi baccha and happy new year, ha warsha khup sunder Jaude agdi tujay sarkha.sunder 💗🫂🫂🫂, and ha jasa me nehmi bolto ata pn bolel ki Me ahe na baccha , don't worry, ha warsha pn apan khup.sunder pane galau, I love you khuppp , kalji geth ja swatachi and ha , nehmi nehmi.nehmi.yavhaun jasta prem karel and gelay ekatra apan 2025 teh 2026 madhe ,asech 2037 paranta jau and lagn kru and ma ekatra ajun.ayusya jagu nit , I love you khuppppp jastaaaa majhiii pilluuuuu me nehmi.ahe tujya sobat 🫂🫂🫂🫂🫂🫂🫂💗💗💗💗💖💖💖💖💖</p>
+                 
+                 <h2 class="handwritten" style="margin-top: 20px; color: var(--primary);">Happy New Year,<br>Let's begin the 2026 together ❤️</h2>
+                 <p style="font-size: 12px; margin-top: 30px; color: #777;">(Tap right to close book)</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        /* --- STARS --- */
+        const canvas = document.getElementById('starCanvas');
+        const ctx = canvas.getContext('2d');
+        let w, h, stars = [];
+        function initStars() { w=canvas.width=window.innerWidth; h=canvas.height=window.innerHeight; stars=[]; for(let i=0;i<60;i++) stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2,s:Math.random()*0.5}); }
+        function drawStars() { ctx.clearRect(0,0,w,h); ctx.fillStyle='white'; stars.forEach(st=>{ctx.beginPath();ctx.arc(st.x,st.y,st.r,0,Math.PI*2);ctx.fill();st.y-=st.s;if(st.y<0)st.y=h;}); requestAnimationFrame(drawStars); }
+        window.addEventListener('resize',initStars); initStars(); drawStars();
+
+        /* --- HOLD BTN --- */
+        const holdBtn = document.getElementById('holdBtn');
+        let timer;
+        const startPress = (e) => { if(e.cancelable)e.preventDefault(); holdBtn.classList.add('is-pressed'); timer=setTimeout(()=>{ document.getElementById('s1').classList.remove('active'); document.getElementById('s2').classList.add('active'); spawnConfetti(); },2000); };
+        const endPress = () => { holdBtn.classList.remove('is-pressed'); clearTimeout(timer); };
+        holdBtn.addEventListener('touchstart',startPress,{passive:false}); holdBtn.addEventListener('touchend',endPress);
+        holdBtn.addEventListener('mousedown',startPress); holdBtn.addEventListener('mouseup',endPress);
+
+        /* --- DRAGGABLES --- */
+        document.querySelectorAll('.glass-card').forEach(c=>{
+            let sx,sy,cx,cy;
+            c.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;c.style.zIndex=100;});
+            c.addEventListener('touchmove',e=>{e.preventDefault();cx=e.touches[0].clientX-sx;cy=e.touches[0].clientY-sy;c.style.transform=`translate(${cx}px,${cy}px) rotate(${cx*0.1}deg)`;},{passive:false});
+            c.addEventListener('touchend',()=>{if(Math.abs(cx)>100||Math.abs(cy)>100){c.style.transition='all 0.5s';c.style.transform=`translate(${cx*5}px,${cy*5}px)`;c.style.opacity=0;}else{c.style.transition='all 0.3s';c.style.transform='translate(0,0)';}});
+        });
+
+        /* --- NAV --- */
+        function goToTicket() { document.getElementById('s2').classList.remove('active'); document.getElementById('s3').classList.add('active'); setTimeout(()=>{document.getElementById('ticket').classList.add('show');spawnConfetti();},100); }
+        function openBook() { document.getElementById('s3').classList.remove('active'); document.getElementById('s4').classList.add('active'); initPages(); }
+
+        /* --- BOOK LOGIC --- */
+        let currentPage = 0;
+        const totalPages = 12; // P0 to P11
+        
+        function initPages() {
+            for(let i=0; i<totalPages; i++) {
+                document.getElementById('p'+i).style.zIndex = totalPages - i;
+            }
+        }
+
+        function nextPage() {
+            if(currentPage === totalPages - 1) {
+                closeBook();
+                return;
+            }
+            if(currentPage < totalPages - 1) {
+                const p = document.getElementById('p'+currentPage);
+                p.style.transform = "rotateY(-150deg)";
+                currentPage++;
+            }
+        }
+
+        function prevPage() {
+            if(currentPage > 0) {
+                currentPage--;
+                const p = document.getElementById('p'+currentPage);
+                p.style.transform = "rotateY(0deg)";
+            }
+        }
+        
+        function closeBook() {
+             // Flip all pages back
+             for(let i=currentPage-1; i>=0; i--) {
+                let p = document.getElementById('p'+i);
+                setTimeout(()=>{
+                    p.style.transform = "rotateY(0deg)";
+                }, (currentPage - i) * 100);
+            }
+            
+            // MAGIC: Change Cover Text after closing
+            setTimeout(() => {
+                const coverContent = document.getElementById('coverContent');
+                coverContent.innerHTML = `
+                    <h1 style="font-family:'Playfair Display'; margin-top: 40%; color: #d4af37; font-size: 30px;">Soon<br>Wedding Album</h1>
+                    <div style="font-size:50px;">💍</div>
+                    <p class="handwritten" style="font-size: 26px; color: #ff4d6d;">Pranay & Shreya</p>
+                `;
+                spawnConfetti();
+            }, 1200);
+
+            currentPage = 0;
+        }
+
+        /* --- CONFETTI --- */
+        function spawnConfetti() {
+            for(let i=0;i<50;i++){const p=document.createElement('div');p.style.position='fixed';p.style.left='50%';p.style.top='50%';p.style.width='5px';p.style.height='5px';p.style.background='#d4af37';p.style.borderRadius='50%';document.body.appendChild(p);const x=(Math.random()-0.5)*window.innerWidth;const y=(Math.random()-0.5)*window.innerHeight;p.animate([{transform:'translate(0,0)',opacity:1},{transform:`translate(${x}px,${y}px)`,opacity:0}],{duration:1000}).onfinish=()=>p.remove();}
+        }
+
+        /* --- NO CONTEXT MENU --- */
+        window.oncontextmenu = function(e) { e.preventDefault(); return false; }
+    </script>
+</body>
+</html>
