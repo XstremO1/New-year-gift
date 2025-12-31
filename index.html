@@ -15,14 +15,15 @@
 
         /* --- GLOBAL RESET --- */
         * { 
-            box-sizing: border-box; 
+            box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
             user-select: none; -webkit-user-select: none;
             touch-action: none;
         }
 
         body {
-            margin: 0; padding: 0;
+            margin: 0;
+            padding: 0;
             background: radial-gradient(circle at 50% 100%, #1a0b2e 0%, #000000 100%);
             height: 100vh; overflow: hidden;
             font-family: 'Lato', sans-serif;
@@ -32,13 +33,15 @@
 
         /* --- BACKGROUND --- */
         #starCanvas {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0; pointer-events: none;
         }
 
         /* --- SCREENS --- */
         .screen {
-            position: absolute; width: 100%; height: 100%;
+            position: absolute;
+            width: 100%; height: 100%;
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
             opacity: 0; pointer-events: none;
@@ -50,42 +53,52 @@
 
         /* --- SCREEN 1: HOLD --- */
         .heart-wrapper {
-            position: relative; width: 140px; height: 140px;
+            position: relative;
+            width: 140px; height: 140px;
             display: flex; justify-content: center; align-items: center;
             cursor: pointer;
         }
         .progress-svg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
             transform: rotate(-90deg);
         }
         .progress-circle {
-            fill: none; stroke: var(--primary); stroke-width: 6; stroke-linecap: round;
+            fill: none;
+            stroke: var(--primary); stroke-width: 6; stroke-linecap: round;
             stroke-dasharray: 377; stroke-dashoffset: 377;
             transition: stroke-dashoffset 2s linear;
         }
         .heart-icon {
-            font-size: 60px; filter: drop-shadow(0 0 20px rgba(255, 77, 109, 0.6));
+            font-size: 60px;
+            filter: drop-shadow(0 0 20px rgba(255, 77, 109, 0.6));
             pointer-events: none; animation: pulse-heart 1.5s infinite;
             transition: transform 0.2s;
         }
         .heart-wrapper.is-pressed .heart-icon { transform: scale(0.85); opacity: 0.8; }
         .heart-wrapper.is-pressed .progress-circle { stroke-dashoffset: 0; }
+        .heart-icon::before { content: '❤️'; }
         @keyframes pulse-heart { 0%,100%{transform:scale(1);} 50%{transform:scale(1.1);} }
 
         /* --- SCREEN 2: DISTRACTIONS --- */
         .distraction-zone { width: 100%; height: 100%; position: relative; }
         .gift-box {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            position: absolute;
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
             font-size: 80px; z-index: 5; cursor: pointer;
         }
+        .gift-box::before { content: '🎁'; }
+        
         .glass-card {
-            position: absolute; width: 150px; height: 200px;
+            position: absolute;
+            width: 150px; height: 200px;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.2); border-radius: 15px;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             color: white; font-weight: bold; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            z-index: 20; transition: transform 0.1s linear;
+            z-index: 20;
+            transition: transform 0.1s linear;
         }
 
         /* --- SCREEN 3: TICKET --- */
@@ -98,7 +111,8 @@
         }
         .golden-ticket.show { transform: scale(1); }
         .claim-btn {
-            background: #1a0b2e; color: #d4af37; border: none; padding: 12px 25px;
+            background: #1a0b2e;
+            color: #d4af37; border: none; padding: 12px 25px;
             border-radius: 25px; margin-top: 15px; font-weight: bold;
         }
 
@@ -109,14 +123,16 @@
             position: relative;
         }
         .notebook-cover {
-            position: absolute; width: 100%; height: 100%;
+            position: absolute;
+            width: 100%; height: 100%;
             background-color: var(--cover);
             border-radius: 5px 15px 15px 5px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.6);
             z-index: 0; top: 5px; left: 5px;
         }
         .paper {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-color: var(--paper);
             background-image: repeating-linear-gradient(var(--paper) 0px, var(--paper) 24px, var(--line) 25px);
             border-radius: 2px 10px 10px 2px;
@@ -129,10 +145,12 @@
             overflow: hidden; backface-visibility: hidden; 
         }
         .paper.long-text-page {
-            overflow-y: auto; display: block; touch-action: pan-y;
+            overflow-y: auto;
+            display: block; touch-action: pan-y;
         }
         .photo-polaroid {
-            background: white; padding: 10px 10px 25px 10px;
+            background: white;
+            padding: 10px 10px 25px 10px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
             transform: rotate(-2deg); width: 90%; margin-bottom: 15px;
             flex-shrink: 0;
@@ -149,12 +167,15 @@
             margin-top: auto; margin-bottom: auto; white-space: pre-wrap;
         }
         .msg-text {
-             font-family: 'Playfair Display', serif; /* Elegant font */
-             font-size: 16px; line-height: 1.6; color: #2c2c2c;
+             font-family: 'Playfair Display', serif;
+             /* Elegant font */
+             font-size: 16px; line-height: 1.6;
+             color: #2c2c2c;
              text-align: left; white-space: pre-wrap; margin-top: 15px;
         }
         .click-nav {
-            position: absolute; top: 0; height: 100%; width: 50%; z-index: 999;
+            position: absolute;
+            top: 0; height: 100%; width: 50%; z-index: 999;
         }
     </style>
 </head>
@@ -167,18 +188,18 @@
             <svg class="progress-svg" viewBox="0 0 140 140">
                 <circle class="progress-circle" cx="70" cy="70" r="60"></circle>
             </svg>
-            <div class="heart-icon">❤️</div>
+            <div class="heart-icon"></div>
         </div>
         <p style="margin-top: 30px; opacity: 0.7; letter-spacing: 2px;">PRESS & HOLD</p>
     </div>
 
     <div id="s2" class="screen">
         <div class="distraction-zone">
-            <div class="gift-box" onclick="goToTicket()">🎁</div>
-            <div class="glass-card" style="top:15%; left:5%; transform:rotate(-5deg);"><div>🌪️</div><p>Stress</p></div>
+            <div class="gift-box" onclick="goToTicket()"></div>
+            <div class="glass-card" style="top:15%; left:5%; transform:rotate(-5deg);"><div>🤯</div><p>Stress</p></div>
             <div class="glass-card" style="top:20%; right:5%; transform:rotate(5deg);"><div>📚</div><p>Exams</p></div>
-            <div class="glass-card" style="bottom:25%; left:10%; transform:rotate(3deg);"><div>⛈️</div><p>Bad Days</p></div>
-            <div class="glass-card" style="bottom:15%; right:10%; transform:rotate(-3deg);"><div>📍</div><p>Distance</p></div>
+            <div class="glass-card" style="bottom:25%; left:10%; transform:rotate(3deg);"><div>☁️</div><p>Bad Days</p></div>
+            <div class="glass-card" style="bottom:15%; right:10%; transform:rotate(-3deg);"><div>👣</div><p>Distance</p></div>
         </div>
     </div>
 
@@ -217,7 +238,7 @@
                 <div class="photo-polaroid" style="transform: rotate(2deg);">
                     <img src="https://i.ibb.co/9H80gRxd/Screenshot-20251230-111342-Gallery.jpg" alt="Movie">
                 </div>
-                <p class="handwritten">Tere Ishq Mein... Movie date 🍿</p>
+                <p class="handwritten">Tere Ishq Mein... Movie date 🎥</p>
             </div>
 
             <div class="paper" id="p3">
@@ -231,69 +252,67 @@
                 <div class="photo-polaroid" style="transform: rotate(3deg);">
                     <img src="https://i.ibb.co/MyQXK8mn/Screenshot-20251230-111421-Gallery.jpg" alt="Mela">
                 </div>
-                <p class="handwritten">Us after shopping at the Mela! 🎡</p>
+                <p class="handwritten">Us after shopping at the Mela! ✨</p>
             </div>
 
             <div class="paper" id="p5">
                 <div class="photo-polaroid">
                     <img src="https://i.ibb.co/8D01BPmT/Screenshot-20251230-111505-Gallery.jpg" alt="My Bday">
                 </div>
-                <p class="handwritten">My Birthday Special 🎉</p>
+                <p class="handwritten">My Birthday Special 🎂</p>
             </div>
 
             <div class="paper" id="p6">
                 <div class="photo-polaroid" style="transform: rotate(-2deg);">
                     <img src="https://i.ibb.co/1YRFjnZ3/Screenshot-20251230-112536-Gallery.jpg" alt="Ur Bday">
                 </div>
-                <p class="handwritten">Celebrating You 🎂❤️</p>
+                <p class="handwritten">Celebrating You 👸🏻</p>
             </div>
             
             <div class="paper" id="p7">
                 <div class="shayari-text">
-सरत्या वर्षाला निरोप देताना, 
-मला एकच गोष्ट समजली,
-की या जगाच्या गर्दीत, 
-फक्त तुझीच साथ भावली.
-
-वेळ बदलली, परिस्थिती बदलली, 
-पण तू तशीच राहिलीस,
-माझ्या अपूर्ण आयुष्याची, 
-तूच एक पूर्ण कहाणी झालीस.
+                    "साल बदल रहा है,<br>
+                    मगर मेरा प्यार नहीं,<br>
+                    तारीखें बदल रही हैं,<br>
+                    पर मेरा यार नहीं।<br><br>
+                    तुम थी, तुम हो,<br>
+                    और हमेशा तुम ही रहोगी,<br>
+                    मेरे हर नए साल की<br>
+                    सबसे हसीन शुरुआत।"
                 </div>
             </div>
 
              <div class="paper" id="p8">
                 <div class="shayari-text">
-वर्ष नवे येईल, तारीख ही बदलून जाईल,
-पण तुझ्यासाठीचे प्रेम, 
-कधीच कमी नाही होईल.
-
-सरत्या वर्षातही तू होतीस, 
-येणाऱ्या वर्षातही तूच हवी,
-मला माझ्या आयुष्याची सुरुवात, 
-फक्त तुझ्यासोबतच हवी.
-
-<strong style="color:var(--primary)">Happy New Year My Love! ❤️</strong>
+                    "हाथ थामे रखना मेरा,<br>
+                    जैसे अब तक रखा है,<br>
+                    आने वाला हर साल,<br>
+                    बस तेरे नाम लिखा है।<br><br>
+                    नया साल मुबारक हो,<br>
+                    मेरी जान, मेरी दुनिया,<br>
+                    खुशियां चूमे कदम तेरे,<br>
+                    यही दुआ है मेरी।"<br><br>
+                    <strong style="color:var(--primary)">Happy New Year My Love! ❤️</strong>
                 </div>
             </div>
             
             <div class="paper long-text-page" id="p9">
                 <h2 class="handwritten" style="margin: 0; color: var(--primary);">Majha Baccha...</h2>
-                <p class="msg-text">Happy new year majha baccha 🫂🫂🫂💗💗💗💗💗
+                <p class="msg-text">Happy new year majha baccha ❤️🥺
 
 Ik ha warsha aplya sathi khup wegla hota but bagh na 2024 la start kela ata 2026 ala , bhari wattay ,ha warsha aplya sathi khup kharab gela ik, pn tevdach changla hi hota jasa ki , apla 1 warsha purna jala ya warshat ,didi la samajla tari she was with us , and apan kiti phirlo , bhandlo, nachlo, gaylo, khup enjoy kela ya warshi...</p>
 <p style="font-size: 12px; color: #666; margin-top: 20px;">(Turn page...)</p>
             </div>
 
-             <div class="paper long-text-page" id="p10">
-                 <p class="msg-text">...teh moments , parat anuh apan lavkarach, ik ata exams and all.ahet, I will focus don't worry, majah ya warsha cha ekacha he ki , me ya warshi tula khayla galel , tujhi kalji geu sakel and nehmi.khush theu sakel ,and i hope so body swatachi jara changli karu sakel 😂, uk tu alis na ya mansala.jagayla shikavla , jo mulga swatacha baini chya lagnat , radu control karu sakto pn tujya lamb janay cha goshti ni kon aso naso tari radto asa mulga tu banavlas ,kharach...</p>
+            <div class="paper long-text-page" id="p10">
+                 <p class="msg-text">...teh moments , parat anuh apan lavkarach, ik ata exams and all.ahet, I will focus don't worry, majah ya warsha cha ekacha he ki , me ya warshi tula khayla galel , tujhi kalji geu sakel and nehmi.khush theu sakel ,and i hope so body swatachi jara changli karu sakel 🥺, uk tu alis na ya mansala.jagayla shikavla , jo mulga swatacha baini chya lagnat , radu control karu sakto pn tujya lamb janay cha goshti ni kon aso naso tari radto asa mulga tu banavlas ,kharach...</p>
                  <p style="font-size: 12px; color: #666; margin-top: 20px;">(Turn page...)</p>
             </div>
 
             <div class="paper long-text-page" id="p11">
-                 <p class="msg-text">I love you khup majhi chotisi baccha and happy new year, ha warsha khup sunder Jaude agdi tujay sarkha.sunder 💗🫂🫂🫂, and ha jasa me nehmi bolto ata pn bolel ki Me ahe na baccha , don't worry, ha warsha pn apan khup.sunder pane galau, I love you khuppp , kalji geth ja swatachi and ha , nehmi nehmi.nehmi.yavhaun jasta prem karel and gelay ekatra apan 2025 teh 2026 madhe ,asech 2037 paranta jau and lagn kru and ma ekatra ajun.ayusya jagu nit , I love you khuppppp jastaaaa majhiii pilluuuuu me nehmi.ahe tujya sobat 🫂🫂🫂🫂🫂🫂🫂💗💗💗💗💖💖💖💖💖</p>
+                 <p class="msg-text">I love you khup majhi chotisi baccha and happy new year, ha warsha khup sunder Jaude agdi tujay sarkha.sunder 🧿😽, and ha jasa me nehmi bolto ata pn bolel ki Me ahe na baccha , don't worry, ha warsha pn apan khup.sunder pane galau, I love you khuppp , kalji geth ja swatachi and ha , nehmi nehmi.nehmi.yavhaun jasta prem karel and gelay ekatra apan 2025 teh 2026 madhe ,asech 2037 paranta jau and lagn kru and ma ekatra ajun.ayusya jagu nit , I love you khuppppp jastaaaa majhiii pilluuuuu me nehmi.ahe tujya sobat ❤️❤️❤️❤️🫂🫂🫂</p>
                  
-                 <h2 class="handwritten" style="margin-top: 20px; color: var(--primary);">Happy New Year,<br>Let's begin the 2026 together ❤️</h2>
+                 <h2 class="handwritten" style="margin-top: 20px; color: var(--primary);">Happy New Year,<br>Let's begin the 2026 together ✨</h2>
                  <p style="font-size: 12px; margin-top: 30px; color: #777;">(Tap right to close book)</p>
             </div>
 
@@ -312,7 +331,8 @@ Ik ha warsha aplya sathi khup wegla hota but bagh na 2024 la start kela ata 2026
         /* --- HOLD BTN --- */
         const holdBtn = document.getElementById('holdBtn');
         let timer;
-        const startPress = (e) => { if(e.cancelable)e.preventDefault(); holdBtn.classList.add('is-pressed'); timer=setTimeout(()=>{ document.getElementById('s1').classList.remove('active'); document.getElementById('s2').classList.add('active'); spawnConfetti(); },2000); };
+        const startPress = (e) => { if(e.cancelable)e.preventDefault(); holdBtn.classList.add('is-pressed');
+        timer=setTimeout(()=>{ document.getElementById('s1').classList.remove('active'); document.getElementById('s2').classList.add('active'); spawnConfetti(); },2000); };
         const endPress = () => { holdBtn.classList.remove('is-pressed'); clearTimeout(timer); };
         holdBtn.addEventListener('touchstart',startPress,{passive:false}); holdBtn.addEventListener('touchend',endPress);
         holdBtn.addEventListener('mousedown',startPress); holdBtn.addEventListener('mouseup',endPress);
@@ -371,10 +391,9 @@ Ik ha warsha aplya sathi khup wegla hota but bagh na 2024 la start kela ata 2026
             // MAGIC: Change Cover Text after closing
             setTimeout(() => {
                 const coverContent = document.getElementById('coverContent');
+                // MODIFIED SECTION HERE
                 coverContent.innerHTML = `
-                    <h1 style="font-family:'Playfair Display'; margin-top: 40%; color: #d4af37; font-size: 30px;">Soon<br>Wedding Album</h1>
-                    <div style="font-size:50px;">💍</div>
-                    <p class="handwritten" style="font-size: 26px; color: #ff4d6d;">Pranay & Shreya</p>
+                    <h1 style="font-family:'Playfair Display'; margin-top: 50%; color: #d4af37; font-size: 30px;">Happy New Year<br>Once Again ❤️‍🔥❤️‍🔥</h1>
                 `;
                 spawnConfetti();
             }, 1200);
